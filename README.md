@@ -33,3 +33,12 @@ Monitoring Script -> Data Checker
 Alert Module -> Notification System  
    
 Logging -> AQI Alert Log  
+
+
+
+## 📬 Author
+👩‍💻 **Neha Vardhini J K**  
+📍 Chennai, India  
+📧 jknehavardhini2004@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/nehavardhinijk) | [GitHub](https://github.com/jk-neha)
+
