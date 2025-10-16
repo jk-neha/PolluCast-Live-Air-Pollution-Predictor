@@ -1,1 +1,47 @@
+###ARUDINO CODE
+#define THINGER_SERIAL_DEBUG
+#include <ThingerESP8266.h>
+#include <DHT.h>
 
+#define DHTPIN D2
+#define DHTTYPE DHT22
+#define MQ135_PIN A0
+
+#define USERNAME "replace with your username"
+#define DEVICE_ID "replace with your device name"
+#define DEVICE_CREDENTIAL "replace with your credential"
+
+#define WIFI_SSID "Neha"
+#define WIFI_PASSWORD "LIAKAAHE"
+
+DHT dht(DHTPIN, DHTTYPE);
+ThingerESP8266 thing(USERNAME, DEVICE_ID, DEVICE_CREDENTIAL);
+
+unsigned long lastSendTime = 0;
+const unsigned long interval = 60000; // Send data every 60 seconds (1 minute)
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+  thing.add_wifi(WIFI_SSID, WIFI_PASSWORD);
+
+  // Define the resource that provides sensor data
+  thing["environment_data"] >> [](pson &out){
+    float temp = dht.readTemperature();
+    float hum = dht.readHumidity();
+    int gas = analogRead(MQ135_PIN);
+
+    if (!isnan(temp)) out["temperature"] = temp;
+    if (!isnan(hum)) out["humidity"] = hum;
+    out["gas"] = gas;
+  };
+}
+
+void loop() {
+  thing.handle();
+
+  if (millis() - lastSendTime >= interval) {
+    thing.stream("environment_data");  // Send the sensor data now
+    lastSendTime = millis();           // Reset the timer
+  }
+}
