@@ -22,4 +22,14 @@
 - Real-time AQI values stored and visualized
 - Alerts triggered when AQI > threshold levels
 
-## 📁 Repository Structure
+##ARCHITECTURAL DIAGRAM
+   
+Sensor/API -> Data Source  
+   
+CSV Storage ->Data Logging  
+   
+Monitoring Script -> Data Checker  
+   
+Alert Module -> Notification System  
+   
+Logging -> AQI Alert Log  
